@@ -64,15 +64,15 @@ class PartiePipopipette:
                 entré 'Humain', JoueurOrdinateur s'il a entré
                 'Ordinateur'.
         '''
-        types_joueurs = ['Ordinateur', 'Humain']
+        #types_joueurs = ['Ordinateur', 'Humain']
 
-        type_joueur = input('Quel type de joueur désirez-vous pour la couleur '
-                            '{} ? Entrez Humain ou Ordinateur: '.format(couleur))
+        #type_joueur = input('Quel type de joueur désirez-vous pour la couleur '
+        #                    '{} ? Entrez Humain ou Ordinateur: '.format(couleur))
 
-        while type_joueur not in types_joueurs:
-            type_joueur = input('Le type entré est invalide. ' 'Les choix sont Humain et Ordinateur: ')
+        #while type_joueur not in types_joueurs:
+        #    type_joueur = input('Le type entré est invalide. ' 'Les choix sont Humain et Ordinateur: ')
 
-        return self.creer_joueur_selon_type(type_joueur, couleur)
+        return self.creer_joueur_selon_type("Humain", couleur)
 
     def creer_joueur_selon_type(self, type_joueur, couleur):
         '''
