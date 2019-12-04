@@ -16,7 +16,8 @@ class ErreurClicPoint(Exception):
     Une exception indiquant qu'un clic a eu lieu sur un point.
     '''
     pass
-
+class ErreurClicLigne(Exception):
+    pass
 
 class CanvasPipopipette(Canvas):
     # Dans le TP, vous devrez ajouter un argument planche en entrée
@@ -250,7 +251,11 @@ class Fenetre(Tk):
 
         try:
             if coup is not None:
-                self.partie.jouer_coup(coup)
+                if self.partie.planche.valider_coup(coup)[0]:
+                    self.partie.jouer_coup(coup)
+                else:
+                    raise ErreurClicLigne('Exception lancée ! Vous avez deja jouer cette ligne !')
+
                 if self.partie.partie_terminee():
                     messagebox.showinfo("Gagnant","le joueur " +self.partie.gagnant_partie+" a gagné")
                     result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
@@ -259,6 +264,8 @@ class Fenetre(Tk):
             else:
                 raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
         except ErreurClicPoint as e:
+            messagebox.showwarning('Erreur !', e)
+        except ErreurClicLigne as e:
             messagebox.showwarning('Erreur !', e)
 
         # On actualise après chaque clic pour garder un canvas bien arrimé à l'état de la partie.
