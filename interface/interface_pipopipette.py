@@ -122,7 +122,7 @@ class CanvasPipopipette(Canvas):
                                   fin_ligne_x,
                                   fin_ligne_y,
                                   tags='ligne',
-                                  fill='white',
+                                  fill=ligne.couleur_affichage(),
                                   width=1)
 
     def dessiner_points(self):
