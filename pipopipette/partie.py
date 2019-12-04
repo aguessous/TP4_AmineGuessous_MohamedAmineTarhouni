@@ -139,6 +139,7 @@ class PartiePipopipette:
         print("C'est au tour du joueur {} de jouer.".format(self.couleur_joueur_courant))
 
         coup = self.joueur_courant.choisir_coup(self.planche)
+
         coup_valide, message = self.planche.valider_coup(coup)
 
         while not coup_valide:

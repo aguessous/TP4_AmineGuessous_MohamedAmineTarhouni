@@ -214,7 +214,6 @@ class Fenetre(Tk):
 
         self.initialiser_canvas()
 
-
         # On lie un clic sur le Canvas à une méthode.
         self.canvas_planche.bind('<Button-1>', self.selectionner)
 
@@ -249,15 +248,16 @@ class Fenetre(Tk):
         '''
         coup = self.canvas_planche.obtenir_coup_joue(event)
 
-
         try:
-
             if coup is not None:
                 coup_valide, message = self.partie.planche.valider_coup(coup)
                 if coup_valide:
                     self.partie.jouer_coup(coup)
                 else:
                     messagebox.showwarning('Important', message)
+                if self.partie.partie_terminee():
+                    messagebox.showinfo("Gagnant","le joueur " +self.partie.gagnant_partie+" a gagné")
+                    result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
             else:
                 raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
         except ErreurClicPoint as e:
