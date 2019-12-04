@@ -35,46 +35,6 @@ class CanvasPipopipette(Canvas):
         # Ici on crée des attributs n_boites_v, n_boites_h, lignes et boites, mais dans le TP
         # on lira directement ces attributs à partir de self.planche. Ces attributs sont donc
         # seulement pour les biens du labo, mais seront tous remplacés par self.planche dans le TP.
-        self.n_boites_v = 3
-        self.n_boites_h = 3
-        self.lignes = {
-            (0, 0, 'H'): '00H',
-            (0, 0, 'V'): '00V',
-            (0, 1, 'H'): '01H',
-            (0, 1, 'V'): '01V',
-            (0, 2, 'H'): '02H',
-            (0, 2, 'V'): '02V',
-            (1, 0, 'H'): '10H',
-            (1, 0, 'V'): '10V',
-            (1, 1, 'H'): '11H',
-            (1, 1, 'V'): '11V',
-            (1, 2, 'H'): '12H',
-            (1, 2, 'V'): '12V',
-            (2, 0, 'H'): '20H',
-            (2, 0, 'V'): '20V',
-            (2, 1, 'H'): '21H',
-            (2, 1, 'V'): '21V',
-            (2, 2, 'H'): '22H',
-            (2, 2, 'V'): '22V',
-            (3, 0, 'H'): '30H',
-            (0, 3, 'V'): '03V',
-            (3, 1, 'H'): '31H',
-            (1, 3, 'V'): '13V',
-            (3, 2, 'H'): '32H',
-            (2, 3, 'V'): '23V',
-        }
-        self.boites = {
-            (0, 0): 'Boite_00',
-            (0, 1): 'Boite_01',
-            (0, 2): 'Boite_02',
-            (1, 0): 'Boite_10',
-            (1, 1): 'Boite_11',
-            (1, 2): 'Boite_12',
-            (2, 0): 'Boite_20',
-            (2, 1): 'Boite_21',
-            (2, 2): 'Boite_22',
-        }
-
         # Appel du constructeur de la classe de base (Canvas).
         # Dans le TP, on remplace self.n_boites_v par self.planche.N_BOITES_V. Idem pour n_boites_h.
         super().__init__(parent,
@@ -256,9 +216,6 @@ class Fenetre(Tk):
                     self.partie.jouer_coup(coup)
                 else:
                     messagebox.showwarning('Important', message)
-                if self.partie.partie_terminee():
-                    messagebox.showinfo("Gagnant","le joueur " +self.partie.gagnant_partie+" a gagné")
-                    result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
             else:
                 raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
         except ErreurClicPoint as e:
@@ -266,6 +223,16 @@ class Fenetre(Tk):
 
         # On actualise après chaque clic pour garder un canvas bien arrimé à l'état de la partie.
         self.canvas_planche.actualiser()
+        if self.partie.partie_terminee():
+            messagebox.showinfo("Gagnant", "le joueur " + self.partie.gagnant_partie + " a gagné")
+            result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
+            print(result)
+            if result:
+                self.canvas_planche.destroy()
+                self.destroy()
+                self.__init__()
+            else:
+                self.destroy()
 
 
 if __name__ == '__main__':
