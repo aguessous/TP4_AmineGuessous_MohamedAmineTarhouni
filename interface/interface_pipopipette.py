@@ -173,6 +173,7 @@ class Fenetre(Tk):
         # Dans le TP, vous voudrez ajouter un attribut self.partie,
         # avec comme valeur une nouvelle Partie
         self.partie = PartiePipopipette()
+        self.title(f'Pipopipette - au tour du joueur {self.partie.couleur_joueur_courant}')
         self.initialiser_canvas()
 
         # On lie un clic sur le Canvas à une méthode.
@@ -214,6 +215,7 @@ class Fenetre(Tk):
                 coup_valide, message = self.partie.planche.valider_coup(coup)
                 if coup_valide:
                     self.partie.jouer_coup(coup)
+                    self.title(f'Pipopipette - au tour du joueur {self.partie.couleur_joueur_courant}')
                 else:
                     messagebox.showwarning('Important', message)
             else:
