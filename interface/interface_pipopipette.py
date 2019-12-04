@@ -180,7 +180,7 @@ class CanvasPipopipette(Canvas):
                 coup = (ligne, col, 'H')
             else:
                 # Clic sur une boîte
-                coup = (ligne, col, 'Boite')
+                coup = None
 
         return coup
 
@@ -209,9 +209,11 @@ class Fenetre(Tk):
 
         # Dans le TP, vous voudrez ajouter un attribut self.partie,
         # avec comme valeur une nouvelle Partie
+
         self.partie = PartiePipopipette()
 
         self.initialiser_canvas()
+
 
         # On lie un clic sur le Canvas à une méthode.
         self.canvas_planche.bind('<Button-1>', self.selectionner)
@@ -247,9 +249,15 @@ class Fenetre(Tk):
         '''
         coup = self.canvas_planche.obtenir_coup_joue(event)
 
+
         try:
+
             if coup is not None:
-                self.partie.jouer_coup(coup)
+                coup_valide, message = self.partie.planche.valider_coup(coup)
+                if coup_valide:
+                    self.partie.jouer_coup(coup)
+                else:
+                    messagebox.showwarning('Important', message)
             else:
                 raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
         except ErreurClicPoint as e:
