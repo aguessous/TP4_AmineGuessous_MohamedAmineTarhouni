@@ -19,12 +19,12 @@ class ErreurClicPoint(Exception):
 class CanvasPipopipette(Canvas):
     # Dans le TP, vous devrez ajouter un argument planche en entrée
     # à ce constructeur.
-    def __init__(self, parent, longueur_ligne=200):
+    def __init__(self, parent, planche, longueur_ligne=200):
         # Nombre de pixels par case, variable.
         self.longueur_ligne = longueur_ligne
         self.largeur_ligne = self.longueur_ligne / 5
         self.dimension_boite = self.longueur_ligne + self.largeur_ligne
-        self.planche = Planche()
+        self.planche = planche
 
         # Dans le TP, ces champs devront être remplis à partir de l'attribut planche d'un objet Partie que vous ajouterez
         # au __init__(). Vous devrez aussi ajouter un attribut self.planche.
@@ -93,7 +93,7 @@ class CanvasPipopipette(Canvas):
 
             # Ici, on crée des rectangles de couleur 'grey'. Dans votre TP, vous voudrez utiliser l'attribut
             # couleur de votre boite, c'est-à-dire utiliser 'fill=boite.couleur_affichage()'.
-            self.create_rectangle(debut_boite_x, debut_boite_y, fin_boite_x, fin_boite_y, tags='boite', fill='grey')
+            self.create_rectangle(debut_boite_x, debut_boite_y, fin_boite_x, fin_boite_y, tags='boite', fill=boite.couleur_affichage())
 
     def dessiner_lignes(self):
         # Ici, on itère sur le dictionnaire self.lignes, sans se servir de la valeur de ligne.
@@ -220,7 +220,7 @@ class Fenetre(Tk):
         # Création du canvas grille.
         # Dans le TP, vous voudrez passer self.partie.planche au constructeur
         # de Canvas
-        self.canvas_planche = CanvasPipopipette(self)
+        self.canvas_planche = CanvasPipopipette(self, self.partie.planche)
         self.canvas_planche.actualiser()
         self.canvas_planche.grid()
 
@@ -249,7 +249,7 @@ class Fenetre(Tk):
 
         try:
             if coup is not None:
-                print(coup)
+                self.partie.jouer_coup(coup)
             else:
                 raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
         except ErreurClicPoint as e:
