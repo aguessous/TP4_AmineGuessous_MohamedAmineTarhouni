@@ -3,6 +3,8 @@
 from tkinter import Tk, Canvas, messagebox
 
 
+
+
 # Classe d'exception créée pour les besoins du labo
 # Supprimez la dans votre TP.
 from pipopipette.partie import PartiePipopipette
@@ -19,7 +21,7 @@ class ErreurClicPoint(Exception):
 class CanvasPipopipette(Canvas):
     # Dans le TP, vous devrez ajouter un argument planche en entrée
     # à ce constructeur.
-    def __init__(self, parent, planche, longueur_ligne=200):
+    def __init__(self, parent, planche, longueur_ligne=100):
         # Nombre de pixels par case, variable.
         self.longueur_ligne = longueur_ligne
         self.largeur_ligne = self.longueur_ligne / 5
@@ -210,7 +212,6 @@ class Fenetre(Tk):
         # Dans le TP, vous voudrez ajouter un attribut self.partie,
         # avec comme valeur une nouvelle Partie
         self.partie = PartiePipopipette()
-
         self.initialiser_canvas()
 
         # On lie un clic sur le Canvas à une méthode.
@@ -250,6 +251,11 @@ class Fenetre(Tk):
         try:
             if coup is not None:
                 self.partie.jouer_coup(coup)
+                if self.partie.partie_terminee():
+                    messagebox.showinfo("Gagnant","le joueur " +self.partie.gagnant_partie+" a gagné")
+                    result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
+
+
             else:
                 raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
         except ErreurClicPoint as e:
