@@ -254,12 +254,11 @@ class Fenetre(Tk):
                 if self.partie.planche.valider_coup(coup)[0]:
                     self.partie.jouer_coup(coup)
                 else:
-                    raise ErreurClicLigne('Exception lancée ! Vous avez deja jouer cette ligne !')
+                    raise ErreurClicLigne(self.partie.planche.valider_coup(coup)[1])
 
                 if self.partie.partie_terminee():
                     messagebox.showinfo("Gagnant","le joueur " +self.partie.gagnant_partie+" a gagné")
                     result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
-
 
             else:
                 raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
