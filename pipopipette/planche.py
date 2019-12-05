@@ -2,7 +2,7 @@
 
 from pipopipette.ligne import Ligne
 from pipopipette.boite import Boite
-
+from pipopipette.exceptions import ErreurPositionCoup
 
 class Planche:
     '''
@@ -227,15 +227,14 @@ class Planche:
             str: message d'erreur approprié si le coup est invalide, None sinon
         '''
         if index_ligne[2] not in ['H', 'V']:
-            return False, "L'orientation de la ligne doit être 'H' ou 'V' !"
+            raise ErreurPositionCoup("L'orientation de la ligne doit être 'H' ou 'V' !")
 
         if not self.coup_dans_les_limites(index_ligne):
-            return False, 'Coup en dehors des limites de la grille !'
+            raise ErreurPositionCoup('Coup en dehors des limites de la grille !')
 
         if self.lignes[(index_ligne)].jouee:
-            return False, 'Coup dans une ligne déjà jouée !'
+            raise ErreurPositionCoup('Coup dans une ligne déjà jouée !')
 
-        return True, None
 
     def obtenir_coups_possibles(self):
         '''

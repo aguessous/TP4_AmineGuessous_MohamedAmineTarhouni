@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from tkinter import Tk, Canvas, messagebox
-
+from pipopipette.exceptions import ErreurPositionCoup
 
 
 
@@ -212,15 +212,15 @@ class Fenetre(Tk):
 
         try:
             if coup is not None:
-                coup_valide, message = self.partie.planche.valider_coup(coup)
-                if coup_valide:
-                    self.partie.jouer_coup(coup)
-                    self.title(f'Pipopipette - au tour du joueur {self.partie.couleur_joueur_courant}')
-                else:
-                    messagebox.showwarning('Important', message)
+                self.partie.planche.valider_coup(coup)
+                self.partie.jouer_coup(coup)
+                self.title(f'Pipopipette - au tour du joueur {self.partie.couleur_joueur_courant}')
             else:
                 raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
         except ErreurClicPoint as e:
+            messagebox.showwarning('Erreur !', e)
+
+        except ErreurPositionCoup as e:
             messagebox.showwarning('Erreur !', e)
 
         # On actualise après chaque clic pour garder un canvas bien arrimé à l'état de la partie.
