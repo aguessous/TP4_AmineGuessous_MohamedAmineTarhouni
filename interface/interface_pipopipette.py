@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from tkinter import Tk, Canvas, messagebox
-from pipopipette.exceptions import ErreurPositionCoup
-
-
-
 # Classe d'exception créée pour les besoins du labo
 # Supprimez la dans votre TP.
 from pipopipette.exceptions import ErreurPositionCoup
@@ -213,6 +209,9 @@ class Fenetre(Tk):
 
         # On actualise après chaque clic pour garder un canvas bien arrimé à l'état de la partie.
         self.canvas_planche.actualiser()
+        self.rejouerPartie()
+
+    def rejouerPartie(self):
         if self.partie.partie_terminee():
             messagebox.showinfo("Gagnant", "le joueur " + self.partie.gagnant_partie + " a gagné")
             result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
