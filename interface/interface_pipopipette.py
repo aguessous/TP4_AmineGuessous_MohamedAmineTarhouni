@@ -216,22 +216,21 @@ class Fenetre(Tk):
 
         # On actualise après chaque clic pour garder un canvas bien arrimé à l'état de la partie.
         self.canvas_planche.actualiser()
-        if self.partie.partie_terminee():
-            messagebox.showinfo("Gagnant", "le joueur " + self.partie.gagnant_partie + " a gagné")
-            result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
-            print(result)
-            if result:
-                self.nouvellePartie()
-            else:
-                self.destroy()
+        self.terminerPartie()
 
-            # partie = PartiePipopipette()
+    def terminerPartie(self):
+         if self.partie.partie_terminee():
+             messagebox.showinfo("Gagnant", self.partie.message_fin_partie())
+             result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
+             if result:
+                 self.nouvellePartie()
+             else:
+                 self.destroy()
 
     def nouvellePartie(self):
         self.destroy()
         partie = PartiePipopipette()
-        self.__init__(partie)
-        self.mainloop()
+        self.lancer(partie)
         # Pour charger d'une partie déjà sauvegardée
         # partie = PartiePipopipette("partie_sauvegardee.txt")
 
@@ -241,11 +240,11 @@ class Fenetre(Tk):
         if self.fichier != '':
             self.destroy()
             partie = PartiePipopipette(self.fichier)
-            self.__init__(partie)
-            self.mainloop()
+            self.lancer(partie)
 
     def sauvegarder(self):
-        self.fichier = filedialog.asksaveasfilename(title="Select file", initialfile='partie_sauvegardee.txt',
+        self.fichier = filedialog.asksaveasfilename(title="Select file", initialfile='partie_sauvegardee',
+                                                    defaultextension=".txt",
                                                     filetypes=(
                                                         ("Fichier texte", "*.txt"), ("Tous les fichiers", "*.*")))
         if self.fichier != '':
@@ -261,3 +260,7 @@ class Fenetre(Tk):
         menufichier.add_command(label="Charger une partie", command=self.charger)
         menufichier.add_command(label="Sauvegarder une partie", command=self.sauvegarder)
         menufichier.add_command(label="Quitter", command=self.destroy)
+
+    def lancer(self, partie):
+        self.__init__(partie)
+        self.mainloop()
