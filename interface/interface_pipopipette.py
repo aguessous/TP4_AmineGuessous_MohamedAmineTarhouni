@@ -5,17 +5,8 @@ from pipopipette.exceptions import ErreurPositionCoup
 
 # Classe d'exception créée pour les besoins du labo
 # Supprimez la dans votre TP.
+from pipopipette.exceptions import ErreurPositionCoup
 from pipopipette.partie import PartiePipopipette
-from pipopipette.planche import Planche
-
-
-class ErreurClicPoint(Exception):
-    '''
-    Une exception indiquant qu'un clic a eu lieu sur un point.
-    '''
-    pass
-class ErreurClicLigne(Exception):
-    pass
 
 class CanvasPipopipette(Canvas):
     # Dans le TP, vous devrez ajouter un argument planche en entrée
@@ -216,10 +207,7 @@ class Fenetre(Tk):
                 self.partie.jouer_coup(coup)
                 self.title(f'Pipopipette - au tour du joueur {self.partie.couleur_joueur_courant}')
             else:
-                raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
-        except ErreurClicPoint as e:
-            messagebox.showwarning('Erreur !', e)
-
+                raise ErreurPositionCoup('Exception lancée ! Vous avez cliqué dans un point !')
         except ErreurPositionCoup as e:
             messagebox.showwarning('Erreur !', e)
 
