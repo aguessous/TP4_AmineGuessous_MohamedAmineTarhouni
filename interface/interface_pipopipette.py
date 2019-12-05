@@ -7,17 +7,8 @@ from tkinter import Tk, Canvas, messagebox
 
 # Classe d'exception créée pour les besoins du labo
 # Supprimez la dans votre TP.
+from pipopipette.exceptions import ErreurPositionCoup
 from pipopipette.partie import PartiePipopipette
-from pipopipette.planche import Planche
-
-
-class ErreurClicPoint(Exception):
-    '''
-    Une exception indiquant qu'un clic a eu lieu sur un point.
-    '''
-    pass
-class ErreurClicLigne(Exception):
-    pass
 
 class CanvasPipopipette(Canvas):
     # Dans le TP, vous devrez ajouter un argument planche en entrée
@@ -219,8 +210,8 @@ class Fenetre(Tk):
                 else:
                     messagebox.showwarning('Important', message)
             else:
-                raise ErreurClicPoint('Exception lancée ! Vous avez cliqué dans un point !')
-        except ErreurClicPoint as e:
+                raise ErreurPositionCoup('Exception lancée ! Vous avez cliqué dans un point !')
+        except ErreurPositionCoup as e:
             messagebox.showwarning('Erreur !', e)
 
         # On actualise après chaque clic pour garder un canvas bien arrimé à l'état de la partie.
