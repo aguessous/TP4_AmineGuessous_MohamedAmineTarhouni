@@ -148,7 +148,7 @@ class CanvasPipopipette(Canvas):
 
 
 class Fenetre(Tk):
-    def __init__(self, partie):
+    def __init__(self):
         super().__init__()
 
         # Figer la fenêtre
@@ -159,8 +159,8 @@ class Fenetre(Tk):
 
         # Dans le TP, vous voudrez ajouter un attribut self.partie,
         # avec comme valeur une nouvelle Partie
-        self.partie = partie
-        #self.partie = PartiePipopipette("partie_en_cours.txt")
+        #self.partie = PartiePipopipette()
+        self.partie = PartiePipopipette("interface/partie_en_cours.txt")
 
         self.title(f'Pipopipette - au tour du joueur {self.partie.couleur_joueur_courant}')
         self.initialiser_canvas()
