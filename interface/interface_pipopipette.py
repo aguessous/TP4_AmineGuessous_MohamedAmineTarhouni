@@ -3,8 +3,6 @@
 from tkinter import Tk, Canvas, messagebox
 from pipopipette.exceptions import ErreurPositionCoup
 
-
-
 # Classe d'exception créée pour les besoins du labo
 # Supprimez la dans votre TP.
 from pipopipette.partie import PartiePipopipette
