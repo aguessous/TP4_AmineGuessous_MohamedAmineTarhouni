@@ -1,0 +1,55 @@
+Coéquipier 1
+Prénom et Nom : Amine Guessous
+Numéro de dossier (NI): 111282423
+
+Coéquipier 2
+Prénom et Nom : Mohamed Amine Tarhouni
+Numéro de dossier (NI): 111282433
+
+Temps de réalisation : 6 heures
+
+
+Fonctionnalités
+---------------
+
+/2 : L'interface est composée d'une planche de pipopipette.
+      Commentaires :
+
+/2 : Le déroulement du jeu et l'assignation des boîtes sont adéquats.
+      Commentaires :
+
+/1 : L'interface est mise à jour correctement lors d'un coup.
+      Commentaires :
+
+/1 : Un message personnalisé est affiché lorsqu'un coup est invalide.
+      Commentaires :
+
+/1 : La gestion de l'invalidité des coups est faite à l'aide d'une exception.
+      Commentaires :
+
+/2 : Un message annonce la fin de la partie et le gagnant.
+      Commentaires :
+
+/1 : Une demande est faite à l'usager pour savoir s'il désire jouer une nouvelle partie.
+      Commentaires :
+
+/2 : Qualité du code (noms de variables, style, commentaires, documentation)
+      Commentaires :
+
+
+Autres fonctionnalités implémentées, s'il y a lieu
+--------------------------------------------------
+
+
+
+Pénalités pour non-respect des consignes
+----------------------------------------
+
+
+
+Autres commentaires du correcteur
+---------------------------------
+
+
+
+Total: /12
