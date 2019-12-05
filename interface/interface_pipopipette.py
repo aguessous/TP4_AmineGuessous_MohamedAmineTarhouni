@@ -211,9 +211,6 @@ class Fenetre(Tk):
         except ErreurPositionCoup as e:
             messagebox.showwarning('Erreur !', e)
 
-        except ErreurPositionCoup as e:
-            messagebox.showwarning('Erreur !', e)
-
         # On actualise après chaque clic pour garder un canvas bien arrimé à l'état de la partie.
         self.canvas_planche.actualiser()
         if self.partie.partie_terminee():
