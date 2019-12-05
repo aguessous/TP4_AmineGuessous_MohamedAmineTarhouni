@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from tkinter import Tk, Canvas, messagebox
+from tkinter import Tk, Canvas, messagebox, Menu
+from tkinter import filedialog
 # Classe d'exception créée pour les besoins du labo
 # Supprimez la dans votre TP.
 from pipopipette.exceptions import ErreurPositionCoup
 from pipopipette.partie import PartiePipopipette
+
 
 class CanvasPipopipette(Canvas):
     # Dans le TP, vous devrez ajouter un argument planche en entrée
@@ -43,7 +45,8 @@ class CanvasPipopipette(Canvas):
 
             # Ici, on crée des rectangles de couleur 'grey'. Dans votre TP, vous voudrez utiliser l'attribut
             # couleur de votre boite, c'est-à-dire utiliser 'fill=boite.couleur_affichage()'.
-            self.create_rectangle(debut_boite_x, debut_boite_y, fin_boite_x, fin_boite_y, tags='boite', fill=boite.couleur_affichage())
+            self.create_rectangle(debut_boite_x, debut_boite_y, fin_boite_x, fin_boite_y, tags='boite',
+                                  fill=boite.couleur_affichage())
 
     def dessiner_lignes(self):
         # Ici, on itère sur le dictionnaire self.lignes, sans se servir de la valeur de ligne.
@@ -148,9 +151,10 @@ class CanvasPipopipette(Canvas):
 
 
 class Fenetre(Tk):
-    def __init__(self):
+    def __init__(self, partie):
         super().__init__()
 
+        self.consigurermenu()
         # Figer la fenêtre
         self.resizable(0, 0)
 
@@ -159,8 +163,9 @@ class Fenetre(Tk):
 
         # Dans le TP, vous voudrez ajouter un attribut self.partie,
         # avec comme valeur une nouvelle Partie
-        #self.partie = PartiePipopipette()
-        self.partie = PartiePipopipette("pipopipette/partie_en_cours.txt")
+        self.partie = partie
+        # self.partie = PartiePipopipette()
+        # PartiePipopipette("pipopipette/partie_en_cours.txt")
 
         self.title(f'Pipopipette - au tour du joueur {self.partie.couleur_joueur_courant}')
         self.initialiser_canvas()
@@ -216,14 +221,43 @@ class Fenetre(Tk):
             result = messagebox.askokcancel("Question", "Voulez vous rejouer la partie")
             print(result)
             if result:
-                self.canvas_planche.destroy()
-                self.destroy()
-                self.__init__()
+                self.nouvellePartie()
             else:
                 self.destroy()
 
+            # partie = PartiePipopipette()
 
-if __name__ == '__main__':
-    # Main de votre programme. Crée la fenêtre et la fait afficher.
-    f = Fenetre()
-    f.mainloop()
+    def nouvellePartie(self):
+        self.destroy()
+        partie = PartiePipopipette()
+        self.__init__(partie)
+        self.mainloop()
+        # Pour charger d'une partie déjà sauvegardée
+        # partie = PartiePipopipette("partie_sauvegardee.txt")
+
+    def charger(self):
+        self.fichier = filedialog.askopenfilename(title="Select file",
+                                                  filetypes=(("Fichier texte", "*.txt"), ("Tous les fichiers", "*.*")))
+        if self.fichier != '':
+            self.destroy()
+            partie = PartiePipopipette(self.fichier)
+            self.__init__(partie)
+            self.mainloop()
+
+    def sauvegarder(self):
+        self.fichier = filedialog.asksaveasfilename(title="Select file", initialfile='partie_sauvegardee.txt',
+                                                    filetypes=(
+                                                        ("Fichier texte", "*.txt"), ("Tous les fichiers", "*.*")))
+        if self.fichier != '':
+            self.partie.sauvegarder(self.fichier)
+            messagebox.showinfo("Info", "La partie est sauvegardée !")
+
+    def consigurermenu(self):
+        menubar = Menu(self)
+        self.config(menu=menubar)
+        menufichier = Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Menu", menu=menufichier)
+        menufichier.add_command(label="Nouvelle partie", command=self.nouvellePartie)
+        menufichier.add_command(label="Charger une partie", command=self.charger)
+        menufichier.add_command(label="Sauvegarder une partie", command=self.sauvegarder)
+        menufichier.add_command(label="Quitter", command=self.destroy)
